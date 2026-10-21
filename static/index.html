@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#152e2b">
+  <title>Demo2 · Your configurable intake workspace</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+  <script src="/static/customize.js" defer></script>
+  <link id="client-theme" rel="stylesheet" href="/static/theme-default.css">
+</head>
+<body>
+  <div id="login" class="login-screen" hidden>
+    <form id="login-form" class="login-card">
+      <div class="brand-mark">M</div><p class="eyebrow">MAXIMIZE 1031</p>
+      <h1>A clearer path<br>from intake to action.</h1>
+      <p class="muted">Enter your demo password to open the intake workspace.</p>
+      <label for="password">Demo password</label>
+      <input id="password" type="password" autocomplete="current-password" required maxlength="256">
+      <button class="primary" type="submit">Open workspace <span>→</span></button>
+      <p id="login-error" class="error" role="alert"></p>
+      <small>Synthetic demonstration · No real client information</small>
+    </form>
+  </div>
+  <div id="workspace" hidden>
+    <aside class="rail">
+      <a class="brand" href="/" aria-label="Maximize 1031 home"><span class="brand-mark">M</span><span><b id="client-brand">MAXIMIZE 1031</b><small>DEMO2 · CONFIGURABLE WORKSPACE</small></span></a>
+      <div class="rail-label">WORKSPACE</div>
+      <div class="nav-active"><span>▤</span> Intake review <span class="nav-count">1</span></div>
+      <div class="case-nav"><span class="case-dot"></span><span><b id="nav-case">Rivera Orchard LLC</b><small>Exchange intake</small></span></div>
+      <div class="rail-bottom"><div class="avatar">ST</div><div>Shant Tchakerian<small>Maximize 1031</small></div></div>
+    </aside>
+    <div class="page">
+      <header class="topbar"><div>Workspace <span>/</span> Intake review</div><div class="top-actions"><span class="demo-badge">DEMO2 · SYNTHETIC</span><button id="logout" class="text-button">Sign out</button></div></header>
+      <main>
+        <nav class="workspace-switcher" aria-label="Workspace views"><button id="show-review" aria-pressed="true">Review case</button><button id="show-customize" aria-pressed="false">Customize the app <span>Plain-language files</span></button></nav>
+        <div id="case-workspace">
+        <section class="intro">
+          <div><p class="eyebrow">LESS CHASING. MORE CLARITY.</p><h1 id="client-heading">Every detail. A clear next step.</h1><p class="muted" id="client-intro">Review what’s on file, resolve the gaps, and prepare the right follow-up.</p></div>
+          <span class="workspace-tag"><span class="status-dot"></span> Intake workspace</span>
+        </section>
+        <section class="case-header">
+          <div class="case-title"><div class="property-icon">⌂</div><div><p class="eyebrow">EXCHANGE INTAKE <span id="case-id">DEMO-RIVERA-001</span></p><h2 id="case-name">Rivera Orchard LLC</h2><p id="case-property">1250 Orchard Avenue · Pasadena, CA 91103</p></div></div>
+          <div class="case-meta" id="sample-meta"><span>PRIMARY CONTACT<strong>Maya Rivera</strong></span><span>SALE PRICE<strong>$2,450,000</strong></span></div>
+        </section>
+        <section class="runbar" aria-label="Demo controls">
+          <div class="mode-field"><label for="mode">Demo mode</label><select id="mode"><option value="rehearsal">Rehearsal · saved results</option><option value="live">Live AI · fresh review</option></select></div>
+          <div class="run-actions"><button id="run" class="primary">Run intake review <span>↗</span></button><button id="next" class="secondary" disabled>Add next batch</button><button id="reset" class="text-button" disabled>Reset demo</button></div>
+        </section>
+        <section class="upload-panel">
+          <div><h3>Bring your own synthetic records</h3><p>Upload Markdown or plain text, then run a fresh AI review. Add more evidence and run it again to see what changes.</p></div>
+          <div class="run-actions"><label for="upload-files">Choose .md or .txt files</label><input id="upload-files" type="file" accept=".md,.txt,text/plain,text/markdown" multiple><button id="upload-button" class="primary">Upload files</button><button id="new-case" class="secondary">Start a new case</button></div>
+          <p id="data-status" role="status"></p><small>Up to 100 KB per file · 30 records · Synthetic data only. Files stay in this browser session for 24 hours.</small>
+        </section>
+        <p id="mode-note" class="mode-note"></p>
+        <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+        <section class="stats" aria-label="Intake summary">
+          <div class="stat"><div class="stat-title">Already on file <span class="stat-icon green">✓</span></div><div id="found-count" class="stat-number">—</div><p>Checklist items supported</p></div>
+          <div class="stat"><div class="stat-title">Need a response <span class="stat-icon amber">↗</span></div><div id="external-count" class="stat-number">—</div><p>Client &amp; escrow follow-up</p></div>
+          <div class="stat"><div class="stat-title">Internal follow-up <span class="stat-icon neutral">⌁</span></div><div id="internal-count" class="stat-number">—</div><p>For your team to handle</p></div>
+          <div class="stat"><div class="stat-title">Source records <span class="stat-icon neutral">▤</span></div><div id="source-count" class="stat-number">5</div><p>Files available for review</p></div>
+        </section>
+        <div class="work-grid">
+          <section class="review-panel">
+            <div class="tabs" role="tablist" aria-label="Review sections">
+              <button id="tab-intake" role="tab" aria-selected="true" aria-controls="pane-intake" data-tab="intake">Intake <span id="gap-count"></span></button>
+              <button id="tab-evidence" role="tab" aria-selected="false" aria-controls="pane-evidence" data-tab="evidence" tabindex="-1">Evidence</button>
+              <button id="tab-drafts" role="tab" aria-selected="false" aria-controls="pane-drafts" data-tab="drafts" tabindex="-1">Drafts</button>
+              <button id="tab-history" role="tab" aria-selected="false" aria-controls="pane-history" data-tab="history" tabindex="-1">History</button>
+            </div>
+            <div id="pane-intake" class="pane" role="tabpanel" aria-labelledby="tab-intake">
+              <div id="empty" class="empty-state"><div class="empty-icon">▤</div><p class="eyebrow">YOUR CASE, BROUGHT TOGETHER</p><h2>Start with what you already have.</h2><p>Upload your own records or use the sample case. See what’s supported, what needs attention, and who to ask next.</p><div class="process"><span>01 · Review records</span><span>02 · Find gaps</span><span>03 · Draft follow-up</span></div></div>
+              <div id="intake-content" hidden></div>
+            </div>
+            <div id="pane-evidence" class="pane" role="tabpanel" aria-labelledby="tab-evidence" hidden><div class="pane-heading"><div><h3>The evidence behind each finding</h3><p>Source references stay attached to every checklist item.</p></div></div><div id="evidence-rows"></div></div>
+            <div id="pane-drafts" class="pane" role="tabpanel" aria-labelledby="tab-drafts" hidden><div class="pane-heading"><div><h3>Follow-up, ready for your review</h3><p>Separate requests for the client and escrow. Nothing is sent.</p></div></div><div id="draft-content"></div></div>
+            <div id="pane-history" class="pane" role="tabpanel" aria-labelledby="tab-history" hidden><div class="pane-heading"><div><h3>A record of what changed</h3><p>Earlier assessments remain available throughout this session.</p></div></div><div id="history-content"></div></div>
+            <footer class="panel-footer"><span id="revision-label">Ready for an initial review</span><a id="download" href="/api/download" hidden>Download review ↓</a></footer>
+          </section>
+          <aside class="assistant-panel">
+            <div class="assistant-heading"><div class="assistant-symbol">✳</div><div><h3>Intake assistant</h3><p>Context for your next decision</p></div><span class="status-dot"></span></div>
+            <div id="chat-messages" class="chat-messages" role="log" aria-label="Assistant conversation" aria-live="polite"><div class="assistant-welcome"><p>Keep the whole case in view.</p><span>After a live review, ask about a finding, its supporting evidence, or the next follow-up.</span></div></div>
+            <div class="suggestions"><button data-question="Why is the closing date flagged?">Why is the closing date flagged? ↗</button><button data-question="What do we still need from the client?">What do we still need from the client? ↗</button></div>
+            <form id="chat-form"><label class="sr-only" for="question">Ask about this case</label><textarea id="question" placeholder="Ask about this case…" rows="2" maxlength="2000" disabled></textarea><div><small>Use receipt status, never tax IDs.</small><button id="ask" type="submit" aria-label="Send question" disabled>↑</button></div></form>
+          </aside>
+        </div>
+        <section class="sources-section"><div class="sources-heading"><h3>Case documents</h3><span>Markdown &amp; text · click to read</span></div><div id="sources" class="source-grid"></div></section>
+        <footer class="page-footer"><span>MAXIMIZE 1031 <span>·</span> Built around your workflow.</span><span>Synthetic records · Drafts only · Professional review required</span></footer>
+      </div>
+        <section id="customize-workspace" hidden>
+          <div class="custom-intro"><p class="eyebrow">YOU OWN THE INSTRUCTIONS</p><h1>Change the words.<br>Change the workflow.</h1><p>Describe what you want to ChatGPT. Review the revised files, then bring them back here. Your architecture stays in place.</p></div>
+          <div class="custom-steps"><article><b>1</b><h3>Take the instructions</h3><p>Download the active Markdown files and open them in ChatGPT.</p><a class="secondary" href="/api/customization/download">Download instruction package ↓</a><button id="copy-custom-prompt">Copy ChatGPT prompt</button></article><article><b>2</b><h3>Describe your change</h3><p>“Make phone numbers optional, use a warmer email tone, and hide the assistant.” Ask ChatGPT for the complete revised files.</p><button id="show-example">See an example change</button></article><article><b>3</b><h3>Review, then apply</h3><p>Upload the changed files below. Compare the exact edits before making them active.</p><small>Changes apply only to your current demo session.</small></article></div>
+          <div id="custom-notice" class="notice" role="status" hidden></div>
+          <section class="custom-card"><div class="custom-heading"><div><h2>Your active instructions</h2><p id="active-version"></p></div><span id="active-checklist-count" class="demo-badge"></span></div><div id="instruction-files" class="instruction-grid"></div><p class="muted">Business rules guide the AI. Appearance settings control supported labels, colors, and section visibility. API keys, code, and access controls stay outside these files.</p></section>
+          <section class="custom-card"><h2>Bring back your changes</h2><p>Choose any changed files: <strong>SKILL.md, workflow.md, checklist.md, ui.md.</strong> Keep their filenames unchanged.</p><div class="custom-upload"><label for="custom-files">Revised instruction files</label><input id="custom-files" type="file" accept=".md" multiple><button id="preview-custom" class="primary">Preview changes</button></div><p class="muted">Uploading creates a proposal. Nothing changes until you apply it.</p></section>
+          <section id="custom-proposal" class="custom-card" hidden><p class="eyebrow">PROPOSED VERSION · NOT ACTIVE</p><h2>Review what will change</h2><div id="custom-diffs"></div><div class="appearance-preview"><p class="eyebrow">PROPOSED APPEARANCE</p><strong id="preview-brand"></strong><h3 id="preview-heading"></h3><p id="preview-intro"></p><p id="preview-visibility"></p><button id="preview-review-button" disabled></button></div><label class="review-check"><input id="review-custom-check" type="checkbox"> I reviewed these changes and want to apply them to this session.</label><div class="run-actions"><button id="apply-custom" class="primary" disabled>Apply reviewed changes</button><button id="discard-custom" class="secondary">Discard proposal</button></div><p>UI changes appear immediately. Run a fresh intake review to see the effect of business-rule changes.</p></section>
+          <section class="custom-card"><h2>Return to an earlier version</h2><p>Restoring instructions leaves earlier assessments intact. Run a fresh review to use the restored rules.</p><label for="restore-version">Instruction version</label><select id="restore-version"></select><button id="restore-custom" class="secondary">Restore selected version</button></section>
+        </section>
+      </main>
+    </div>
+  </div>
+  <dialog id="source-dialog"><div class="dialog-heading"><h3 id="source-title"></h3><button id="close-source" aria-label="Close document">✕</button></div><pre id="source-text"></pre></dialog>
+<dialog id="case-dialog"><form id="case-form"><h3>Start a new synthetic case</h3><p>This replaces the current workspace. Download your review first to keep it.</p><label for="new-case-name">Case name</label><input id="new-case-name" required maxlength="100" placeholder="Example: Cedar Grove LLC"><div class="run-actions"><button type="submit" class="primary">Create empty case</button><button type="button" id="cancel-case">Cancel</button></div></form></dialog>
+</body>
+</html>

@@ -1,0 +1,29 @@
+# Deploy THIS directory as its own repository root.
+# This provisions a paid web service and disk. Review pricing before creating it.
+services:
+  - type: web
+    name: m1031-intake-demo2
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /health
+    disk:
+      name: intake-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.7
+      - key: APP_ENV
+        value: production
+      - key: DATA_DIR
+        value: /var/data
+      - key: DEMO_PASSWORD
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-6-astra
+      - key: MAX_LIVE_CALLS_PER_DAY
+        value: "50"

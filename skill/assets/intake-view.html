@@ -1,0 +1,55 @@
+<section id="__ROOT__" aria-label="Maximize 1031 intake review">
+  <style>
+    #__ROOT__ .intake-heading {display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:6px 96px 12px 0;flex-wrap:wrap}
+    #__ROOT__ .intake-heading h2 {margin:6px 0}
+    #__ROOT__ .intake-summary {margin:18px 0}
+    #__ROOT__ .intake-controls {margin:18px 0}
+    #__ROOT__ .intake-row {display:grid;grid-template-columns:minmax(140px,1fr) minmax(0,2fr);gap:16px;padding:14px 0;border-bottom:1px solid var(--border)}
+    #__ROOT__ .intake-row p {margin:4px 0;overflow-wrap:anywhere}
+    #__ROOT__ .intake-kicker {color:var(--muted-foreground)}
+    #__ROOT__ .intake-email {white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;margin:12px 0 24px}
+    #__ROOT__ details {padding:12px 0;border-bottom:1px solid var(--border)}
+    #__ROOT__ summary {font-weight:500}
+    #__ROOT__ .intake-detail {margin:12px 0;overflow-wrap:anywhere}
+    #__ROOT__ .intake-footer {margin-top:18px}
+    #__ROOT__ [hidden] {display:none!important}
+    @media(max-width:520px){#__ROOT__ .intake-row{grid-template-columns:1fr;gap:4px}#__ROOT__ .intake-heading{padding-right:0}}
+  </style>
+  <div class="intake-heading">
+    <div><div class="intake-kicker text-small">MAXIMIZE 1031 · INTAKE REVIEW</div><h2>__CASE__</h2><span class="text-muted">__PROPERTY__</span></div>
+    <span class="viz-badge">Synthetic demo</span>
+  </div>
+  <div class="viz-row text-small"><span>Ingestion: assumed</span><span aria-hidden="true">·</span><span>Sources: Markdown fixtures</span><span aria-hidden="true">·</span><span>Emails: drafts only</span></div>
+  <div class="viz-grid intake-summary">
+    <div class="card viz-stat"><div class="text-muted">Already on file</div><div class="viz-stat-value">__FOUND__</div><div class="text-small">Checklist items · avoid repeat asks</div></div>
+    <div class="card viz-stat"><div class="text-muted">Need a response</div><div class="viz-stat-value">__EXTERNAL__</div><div class="text-small">Client or escrow items</div></div>
+    <div class="card viz-stat"><div class="text-muted">Internal follow-up</div><div class="viz-stat-value">__INTERNAL__</div><div class="text-small">Kept out of client email</div></div>
+  </div>
+  <div class="viz-controls intake-controls" aria-label="Review views">
+    <button type="button" class="btn btn-primary" data-view="intake" aria-pressed="true">Intake</button>
+    <button type="button" class="btn" data-view="evidence" aria-pressed="false">Evidence</button>
+    <button type="button" class="btn" data-view="drafts" aria-pressed="false">Drafts</button>
+  </div>
+  <div data-pane="intake"><h3>What needs attention</h3>__GAPS__<details><summary>Optional and not applicable · __NONBLOCKING__ items</summary>__OPTIONAL__</details></div>
+  <div data-pane="evidence" hidden><h3>What supports the assessment</h3><div class="text-muted text-small">__TOTAL__ checklist items · source references preserved</div>__EVIDENCE__</div>
+  <div data-pane="drafts" hidden><h3>Client follow-up</h3><span class="viz-badge">Draft · not sent</span><div class="intake-email">__CLIENT_EMAIL__</div><hr><h3>Escrow follow-up</h3><span class="viz-badge">Draft · not sent</span><div class="intake-email">__ESCROW_EMAIL__</div></div>
+  <div class="intake-footer text-small text-muted">Snapshot: __REVISION__ · __SOURCES__ source records · __CONFLICTS__ unresolved conflicts</div>
+  <span class="sr-only" data-live aria-live="polite"></span>
+</section>
+<script>
+(()=>{
+  const root=document.getElementById('__ROOT__');
+  const buttons=[...root.querySelectorAll('[data-view]')];
+  const allowed=['intake','evidence','drafts'];
+  function select(view,persist){
+    if(!allowed.includes(view))view='intake';
+    buttons.forEach(b=>{const active=b.dataset.view===view;b.setAttribute('aria-pressed',String(active));b.classList.toggle('btn-primary',active)});
+    root.querySelectorAll('[data-pane]').forEach(p=>p.hidden=p.dataset.pane!==view);
+    root.querySelector('[data-live]').textContent=view==='drafts'?'Showing client and escrow drafts':view==='evidence'?'Showing checklist evidence':'Showing outstanding intake items';
+    if(persist&&window.openai?.setWidgetState)window.openai.setWidgetState({modelContent:null,privateContent:{view}}).catch(()=>{});
+  }
+  buttons.forEach(b=>b.addEventListener('click',()=>select(b.dataset.view,true)));
+  select(window.openai?.widgetState?.privateContent?.view,false);
+  window.addEventListener('openai:set_globals',e=>select(e.detail?.globals?.widgetState?.privateContent?.view,false));
+})();
+</script>
